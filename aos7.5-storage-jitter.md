@@ -3,3 +3,6 @@ Experiment is to read from stargate cache (to avoid NVME device jitter) and meas
 
 ##### AOS 7.5 Default
 ![7.5 Defaults](https://github.com/gary-ntnx/nx-jitter/blob/994b877a79c3aa2ad2a2ecec4987eeae2ec82cbc/iops/7.5-defaults-IOPS.svg)
+##### AOS 7.5 Some Services disabled
+Disabled via genesis
+![7.5 Services Disabled](https://github.com/gary-ntnx/nx-jitter/blob/91bcbd9f20bf7e80add06348c40a3f6b4530baa4/iops/7.5-defaults-some-services-stopped-IOPS.svg)

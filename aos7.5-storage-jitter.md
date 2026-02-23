@@ -9,3 +9,6 @@ Disabled via genesis
 genesis stop sys_stat_collector curator insights_server alert_manager xtrim insights_data_transfer lazan cluster_health
 ```
 ![7.5 Services Disabled](https://github.com/gary-ntnx/nx-jitter/blob/91bcbd9f20bf7e80add06348c40a3f6b4530baa4/iops/7.5-defaults-some-services-stopped-IOPS.svg)
+##### AOS 7.5 stargate_alarm_handle=0
+Additionally I set `stargate_alarm_handle=0` and restarted stagate
+![AOS 7.5 stargate alarm handler 0](https://github.com/gary-ntnx/nx-jitter/blob/962f2f39a647f6f3569ffdd0ec90bc242acfe586/iops/7.5-defaults-some-services-stopped-stargate_alarm_handle-0-IOPS.svg)

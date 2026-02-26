@@ -34,5 +34,10 @@ Hacked.
 epoll_load_balance_high_idle_threshold_percent : int32 : 40 :: NP :: 45
 epoll_load_balance_low_idle_threshold_percent : int32 : 15 :: NP :: 50
 ```
-
+###### messages
+`stargate.INFO` shows messages like these:
+```
+I20260226 16:37:25.566675Z 3750024 tcp_connection.cc:1053] Epoll load balancer: Migrating tcp connection with fd 977 from epoll_1 to epoll_6
+I20260226 16:37:25.566699Z 3750024 tcp_connection.cc:1103] fd 977 removed from epoll driver epoll_1. It will be migrated to epoll driver epoll_6
+```
 #### Default EPOLL

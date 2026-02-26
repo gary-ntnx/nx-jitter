@@ -1,6 +1,11 @@
 # AOS 7.5 Storage Jitter
 Experiment is to read from stargate cache (to avoid NVME device jitter) and measure performance jitter.  In the end it was more useful to run over a long period (e.g. 1 Hour) so that we can monitor and identify periodic jitter.  Some of the periodic jitter is at a frequency of 10's of seconds so running the test for similar lengths of time reports as veriability rather than periodic jitter.
 
+Identified two sources of variability
+* Services interference jitter
+* EPOLL Skew
+
+### Services Jitter
 ##### AOS 7.5 Default
 ![7.5 Defaults](https://github.com/gary-ntnx/nx-jitter/blob/994b877a79c3aa2ad2a2ecec4987eeae2ec82cbc/iops/7.5-defaults-IOPS.svg)
 ##### AOS 7.5 Some Services disabled
@@ -12,3 +17,20 @@ genesis stop sys_stat_collector curator insights_server alert_manager xtrim insi
 ##### AOS 7.5 stargate_alarm_handle=0
 Additionally I set `stargate_alarm_handle=0` and restarted stagate
 ![AOS 7.5 stargate alarm handler 0](https://github.com/gary-ntnx/nx-jitter/blob/962f2f39a647f6f3569ffdd0ec90bc242acfe586/iops/7.5-defaults-some-services-stopped-stargate_alarm_handle-0-IOPS.svg)
+### EPOLL Skew
+On my cluster nodes - there are 8 EPOLL threads - and by coincidence my test has 8 vdisks.  When we observe stargate we see that not all EPOLLs are always in use - in other words two EPOLL threads may be 
+running at 70-80% while other threads are idle.
+#### gflags
+There are some gflags which control the dynamic rebalancing
+###### load balancing defaults
+```
+  epoll_load_balance_high_idle_threshold_percent : If an epoll driver is more than this percent idle, it is considered a destination candidate by the load balancer. : int32 :: 40
+  epoll_load_balance_low_idle_threshold_percent : If an epoll driver is less than this percent idle, it is considered a source candidate by the load balancer. : int32 :: 15
+```
+Hacked.
+```
+epoll_load_balance_high_idle_threshold_percent : int32 : 40 :: NP :: 45
+epoll_load_balance_low_idle_threshold_percent : int32 : 15 :: NP :: 50
+```
+
+#### Default EPOLL

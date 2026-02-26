@@ -29,15 +29,22 @@ epoll_load_balance_high_idle_threshold_percent : 40  (Less than 60% busy)
 epoll_load_balance_low_idle_threshold_percent : 15 (More than 85% busy)
    If an epoll driver is less than this percent idle, it is considered a source candidate by the load balancer. 
 ```
-Hacked.
-```
-epoll_load_balance_high_idle_threshold_percent : int32 : 40 :: NP :: 45
-epoll_load_balance_low_idle_threshold_percent : int32 : 15 :: NP :: 50
-```
 ###### messages
 `stargate.INFO` shows messages like these:
 ```
 I20260226 16:37:25.566675Z 3750024 tcp_connection.cc:1053] Epoll load balancer: Migrating tcp connection with fd 977 from epoll_1 to epoll_6
 I20260226 16:37:25.566699Z 3750024 tcp_connection.cc:1103] fd 977 removed from epoll driver epoll_1. It will be migrated to epoll driver epoll_6
 ```
-#### Default EPOLL
+####
+Attempt to improve convergence and balancing twiddling the gflags
+##### gflag changes
+Close ratio.
+```
+epoll_load_balance_high_idle_threshold_percent : int32 : 40 :: NP :: 45
+epoll_load_balance_low_idle_threshold_percent : int32 : 15 :: NP :: 50
+```
+#### Default EPOLL Balancing IOPS
+![Default EPOLL load-balancing](https://github.com/gary-ntnx/nx-jitter/blob/24fc0b3bb2a492a638f5b3cc392754f0acdcdb76/iops/run6-epoll-default-frodo-4.svg)
+
+#### Close-ratio EPOLL Balancing IOPS
+![Close-Ratio EPOLL load-balancing](https://github.com/gary-ntnx/nx-jitter/blob/24fc0b3bb2a492a638f5b3cc392754f0acdcdb76/iops/run5-epoll-converge-frodo-4.svg)

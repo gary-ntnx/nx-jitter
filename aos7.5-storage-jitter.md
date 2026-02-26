@@ -26,7 +26,7 @@ There are some gflags which control the dynamic rebalancing
 ```
 epoll_load_balance_high_idle_threshold_percent : 40  (Less than 60% busy)
     If an epoll driver is more than this percent idle, it is considered a destination candidate by the load balancer. 
-epoll_load_balance_low_idle_threshold_percent : 15 (More than 85% idle)
+epoll_load_balance_low_idle_threshold_percent : 15 (More than 85% busy)
    If an epoll driver is less than this percent idle, it is considered a source candidate by the load balancer. 
 ```
 Hacked.
